@@ -1,17 +1,47 @@
 <section class="hero">
-    <div class="hero-content">
+    
+    <div class="hero-grid">
+        <div class="hero-copy">
+            <h1 class="hero-title">Planify helps you focus, plan, and win your day.</h1>
+            <span class="hero-label">Organize every day with clarity</span>
+            <p class="hero-description">Create personalized tasks, track deadlines, and keep your work flowing with a clean dashboard made for modern productivity.</p>
 
-        <h1 class="hero-title">
-            <span id="typing-text"></span>
-            <span class="cursor">|</span>
-        </h1>
+            <div class="hero-features">
+                <div class="feature-card">
+                    <strong>Smart task flow</strong>
+                    <span>Stay on top of every deadline without the noise.</span>
+                </div>
+                <div class="feature-card">
+                    <strong>Deep focus mode</strong>
+                    <span>Switch into distraction-free work sessions instantly.</span>
+                </div>
+                <div class="feature-card">
+                    <strong>Flexible planning</strong>
+                    <span>Organize daily goals, priorities, and deadlines in one place.</span>
+                </div>
+                <div class="feature-card">
+                    <strong>Simple progress tracking</strong>
+                    <span>Review pending work quickly and keep your day moving with clarity.</span>
+                </div>
+                <div class="feature-card">
+                    <strong>Quick task creation</strong>
+                    <span>Add important work in seconds and capture ideas before they slip away.</span>
+                </div>
+                <div class="feature-card">
+                    <strong>Focused daily routine</strong>
+                    <span>Build a steady workflow with planning and focus tools working together.</span>
+                </div>
+            </div>
 
-        <p class="hero-subtitle">
-            Manage your listings efficiently. Track progress. Stay organized.
-            Sirius helps you stay ahead with smart management tools.
-        </p>
-
-        <a href="/focus" class="hero-btn">Start focus</a>
-
+            <div class="hero-buttons">
+                <% if (!currentUser) { %>
+                    <a href="/signup" class="hero-btn primary">Get Started</a>
+                    <a href="/login" class="hero-btn secondary">Login</a>
+                <% } else { %>
+                    <a href="/listings" class="hero-btn primary">View Tasks</a>
+                    <a href="/focus" class="hero-btn secondary">Start Focus</a>
+                <% } %>
+            </div>
+        </div>
     </div>
 </section>

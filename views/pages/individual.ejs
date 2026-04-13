@@ -1,33 +1,27 @@
 <% layout("layouts/boilerplate") %>
 
-<body>
-
 <div class="page-wrapper">
-
     <div class="single-container">
-
         <h2>Listing Details</h2>
 
         <div class="single-card">
+            <% const displayStatus = getListingDisplayStatus(listing); %>
+            <% const isOverdue = isListingOverdue(listing); %>
 
-            <!-- TITLE + STATUS -->
             <div class="single-header">
                 <h3><%= listing.title %></h3>
 
-                <span class="status-badge <%= listing.status.toLowerCase() %>">
-                    <%= listing.status %>
+                <span class="status-badge <%= displayStatus.toLowerCase() %>">
+                    <%= displayStatus %>
                 </span>
             </div>
 
-            <!-- DESCRIPTION -->
             <div class="single-field">
                 <label>Description</label>
                 <p><%= listing.description || "No description provided" %></p>
             </div>
 
-            <!-- DETAILS GRID -->
             <div class="single-grid">
-
                 <div class="single-field">
                     <label>Category</label>
                     <p><%= listing.category %></p>
@@ -35,11 +29,7 @@
 
                 <div class="single-field">
                     <label>Deadline</label>
-                    <p>
-                        <%= listing.deadline 
-                            ? new Date(listing.deadline).toDateString() 
-                            : "No deadline" %>
-                    </p>
+                    <p><%= listing.deadline ? new Date(listing.deadline).toDateString() : "No deadline" %></p>
                 </div>
 
                 <div class="single-field">
@@ -49,37 +39,32 @@
 
                 <div class="single-field">
                     <label>Created At</label>
-                    <p>
-                        <%= new Date(listing.createdAt).toDateString() %>
-                    </p>
+                    <p><%= new Date(listing.createdAt).toDateString() %></p>
                 </div>
-
             </div>
 
-            <!-- ACTION BUTTONS -->
             <div class="single-actions">
                 <a href="/listings" class="action-btn back-btn">Back</a>
 
-                <a href="/listings/<%= listing._id %>/edit" 
-                   class="action-btn edit-btn">
-                   Edit
-                </a>
+                <% if (isOverdue) { %>
+                    <span class="action-btn disabled-btn">Edit Disabled</span>
+                <% } else { %>
+                    <a href="/listings/<%= listing._id %>/edit" class="action-btn edit-btn">Edit</a>
+                <% } %>
 
-                <form action="/listings/<%= listing._id %>?_method=DELETE" 
-                      method="POST">
-                    <button class="action-btn delete-btn">
-                        Delete
+                <form action="/listings/<%= listing._id %>/status?_method=PATCH" method="POST">
+                    <input type="hidden" name="status" value="<%= listing.status === 'Completed' ? 'Pending' : 'Completed' %>">
+                    <button class="action-btn complete-btn">
+                        <%= listing.status === 'Completed' ? 'Mark Pending' : 'Mark Complete' %>
                     </button>
-                    &nbsp; &nbsp;&nbsp; &nbsp; <a id="complete" href="/listing/complete/<%=listing.estimatedMinutes%>">complete it!!</a>
                 </form>
+
+                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+                    <button class="action-btn delete-btn">Delete</button>
+                </form>
+
+                <a id="complete" href="/listing/complete/<%= listing.estimatedMinutes %>">Start Focus Session</a>
             </div>
-
         </div>
-
     </div>
-
-    
-
 </div>
-
-</body>

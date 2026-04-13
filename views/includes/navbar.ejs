@@ -2,20 +2,26 @@
     <div class="nav-container">
 
         <div class="nav-logo">
-            <a href="/">Sirius</a>
+            <a href="/">Planify</a>
         </div>
 
         <ul class="nav-menu">
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/listings/today" class="nav-link">Today's Tasks</a></li>
+            <li><a href="/" class="nav-link <%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
+            <li><a href="/listings/today" class="nav-link <%= currentPath === '/listings/today' ? 'active' : '' %>">Today's Tasks</a></li>
 
-            <li><a href="/listings" class="nav-link">All Listings</a></li>
-            <li><a href="/listings/pending" class="nav-link">Pending</a></li>
-            <li><a href="/listings/new" class="nav-link add-new" method="GET">Add New</a></li>
+            <li><a href="/listings" class="nav-link <%= currentPath === '/listings' ? 'active' : '' %>">All Listings</a></li>
+            <li><a href="/listings/pending" class="nav-link <%= currentPath === '/listings/pending' ? 'active' : '' %>">Pending</a></li>
+            <li><a href="/listings/new" class="nav-link add-new <%= currentPath === '/listings/new' ? 'active' : '' %>" method="GET">Add New</a></li>
         </ul>
 
         <div class="nav-auth">
-            <a href="/login" class="login-btn">Login</a>
+            <% if (!currentUser) { %>
+                <a href="/login" class="login-btn">Login</a>
+                <a href="/signup" class="signup-btn">Sign Up</a>
+            <% } else { %>
+                <span class="welcome-user">Welcome, <%= currentUser.fullName %></span>
+                <a href="/logout" class="logout-btn">Logout</a>
+            <% } %>
         </div>
 
     </div>

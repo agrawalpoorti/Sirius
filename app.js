@@ -297,7 +297,7 @@ app.get("/signup",(req,res)=>{
 
 app.post("/signup",async(req,res)=>{
   try{
-    let {fullName,userName,email,password,confirmPassword} = req.body;
+    let {fullName,email,password,confirmPassword} = req.body;
     console.log(req.body);
    
     if(password!=confirmPassword){
@@ -312,7 +312,6 @@ app.post("/signup",async(req,res)=>{
 
      const newUser = new Users({
         fullName,
-        userName,
         email,
         password: hashedPassword,
       });
@@ -322,8 +321,7 @@ app.post("/signup",async(req,res)=>{
       req.session.user = {
         _id: newUser._id,
         fullName: newUser.fullName,
-        email: newUser.email,
-        userName: newUser.userName
+        email: newUser.email
       };
       
       setFlash(req, "success", "Account created successfully.");
@@ -352,8 +350,7 @@ app.post("/login",async(req,res)=>{
     req.session.user = {
       _id: User._id,
       fullName: User.fullName,
-      email: User.email,
-      userName: User.userName
+      email: User.email
     };
 
     setFlash(req, "success", `Welcome back, ${User.fullName}.`);
